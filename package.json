@@ -1,0 +1,20 @@
+{
+  "name": "projectmanagment",
+  "version": "1.0.0",
+  "description": "A Project management Application for beginners",
+  "keywords": [
+    "Backend",
+    "API",
+    "creation"
+  ],
+  "license": "ISC",
+  "author": "L Yagnesh",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "prettier": "3.9.9"
+  }
+}
