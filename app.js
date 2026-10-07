@@ -8,4 +8,8 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
+app.get("/instagram",(req,res)=>{
+  res.send("you are in the instagram");
+})
+
 export default app;
