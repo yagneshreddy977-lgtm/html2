@@ -70,7 +70,7 @@ userschema.methods.generateRefreshToken = function(){
 };
 
 userschema.methods.generateTemporaryToken = function(){
-   const unhashedToken = crypt0.randomBytes(20).toString("hex");
+   const unhashedToken = crypto.randomBytes(20).toString("hex");
    const hashedToken = crypto.createHash
                         .update(unhashedToken)
                         .digest("hex");

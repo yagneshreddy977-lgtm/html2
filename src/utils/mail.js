@@ -65,4 +65,4 @@ const emailVerificationMailContent = (username, verificationUrl) =>
 export {
     emailVerificationMailContent,
     sendEmail,
-};
+}; 
