@@ -20,6 +20,12 @@ const userschema = new Schema(
         required:[true,"Password is Requiredd"],
         type:String
        },
+       emailVerificationToken:{
+        type:String
+       },
+       emailVerificationExpiry:{
+        type:Date
+       },
        forgotPasswordToken:{
         type:String
        },
@@ -31,10 +37,9 @@ const userschema = new Schema(
         timestamps:true
     }
 ) 
-userschema.pre("save" , async function(next){
-    if(!this.isModified("password")) return next();
-   this.password =  await bcrypt.hash(this.password,10);
-   next();
+userschema.pre("save" , async function(){
+    if(!this.isModified("password")) return;
+    this.password = await bcrypt.hash(this.password,10);
 })
 
 userschema.methods.isPasswordcorrect = async function(password){
@@ -71,7 +76,7 @@ userschema.methods.generateRefreshToken = function(){
 
 userschema.methods.generateTemporaryToken = function(){
    const unhashedToken = crypto.randomBytes(20).toString("hex");
-   const hashedToken = crypto.createHash
+   const hashedToken = crypto.createHash("sha256")
                         .update(unhashedToken)
                         .digest("hex");
 const tokenExpiry  = Date.now() + (20*60*1000) //20mins

@@ -15,7 +15,7 @@ const sendEmail = async(options)=>{
     const emailHtml = mailGenerator.generate(options.mailgenContent)
 
 
-    nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         host:process.env.MAILTRAP_SMTP_HOST,
         port:process.env.MAILTRAP_SMTP_PORT,
         auth:{
@@ -33,10 +33,11 @@ const sendEmail = async(options)=>{
     }
 
     try{
-        await WebTransportError.sendMail( mail)
+        await transporter.sendMail(mail)
     }catch(error){
         console.error("email services failed ......")
         console.error("Error:",error)
+        throw error
     }
 };
 
@@ -52,7 +53,7 @@ const emailVerificationMailContent = (username, verificationUrl) =>
             action:{
                 instructions:"To verify you email please click on the following button",
                 button:{
-                    color:Green,
+                    color:"#22c55e",
                     text:"verify Your email",
                     link:verificationUrl
                 },

@@ -7,8 +7,9 @@ app.use(express.static("public"));
 
 
 import healthcheckrouter from "./src/routes/healthcheck.routes.js";
-
+import authrouter from "./src/routes/auth.routes.js";
 app.use("/api/v1/healthcheck",healthcheckrouter);
+app.use("/api/v1/auth",authrouter);
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
