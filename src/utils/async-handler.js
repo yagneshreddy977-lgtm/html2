@@ -1,3 +1,5 @@
+//handle errors from asynchronous route handlers without writing a try catch code block in every controller...;
+
 const asyncHandler = (requesthandler)=>{
     return (req,res,next)=>{
         Promise
