@@ -81,6 +81,65 @@ const registerUser = asyncHandler(async(req,res)=>{
     );
 });
 
+/*
+to login a user
+take data from the user
+validate
+if user exists
+if password is correct
+generate tokens
+send tokens in cookies
+*/
+const login = asyncHandler(async(req,res)=>{
+    const { email, password } = req.body;
+
+    if(!email){
+        throw new ApiError(400,"email is required");
+    }
+
+    const User = await user.findOne({ email: email.trim() });
+
+    if(!User){
+        throw new ApiError(400,"user does not exists");
+    }
+
+    const isPasswordvalid = await User.isPasswordcorrect(password);
+
+    if(!isPasswordvalid){
+        throw new ApiError(400,"Invalid Credentials");
+    }
+
+    const {refresh_token,access_token}=await generateAccessTokenAndRefreshTokens(User._id);
+
+    const loggedInUser = await user.findById(User._id).select(
+        "-password -refreshToken -emailVerificationToken -emailVerificationExpiry"
+    );
+
+
+    const options = {
+         httpOnly:true,
+         secure:process.env.NODE_ENV === "production",
+         sameSite:"lax"
+    };
+
+return res
+.status(200)
+.cookie("accessToken",access_token,options)
+.cookie("refreshToken",refresh_token,options)
+.json(
+    new ApiResponse(
+        200,{
+            user:loggedInUser,
+            access_token,
+            refresh_token
+        },
+        "user Logged In successfully"
+    )
+);
+});
+
+
+
 export {
-    registerUser
+    registerUser,login
 };
