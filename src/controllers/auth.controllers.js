@@ -238,6 +238,22 @@ const refreshAcessToken = asyncHandler(async(req,res)=>{
     }
 
 })
+
+/*
+The Logic for any controller is 
+1.Receive the input
+Identify where the data comes from: req.body, req.params, req.query, req.file, or req.user.
+2.Validate the input
+Check required fields, valid formats, and any constraints. Reject invalid data early.
+3.Identify the user or resource
+For protected routes, use the user identified by verifyJWT. Find any required document in the database.
+Check the business rules
+4.Does the user exist? Is the password correct? Is the email already registered? Is the user allowed to perform this action?
+5.Perform the main operation
+Create, find, update, delete, hash a password, generate tokens, or upload a file, depending on the feature.
+6.Return the response
+Use the appropriate HTTP status and response format. Return only information the client should receive.
+*/ 
 export {
     registerUser,login,logoutUser,getUserDetails,changePassword,refreshAcessToken
 };
