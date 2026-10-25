@@ -40,6 +40,18 @@ const userLoginvalidator =()=>{
     ];
 };
 
+/*our thinking logic for any validatior is 
+1.Identify the input fields
+What information is the API expecting? For example, registration expects username, email, and password in req.body.
+2.Decide the rules for each field
+Username must not be empty. Email must have a valid email format. Password must meet your minimum length requirements.
+3.Write the validation chains
+Use functions such as body(), followed by rules such as .notEmpty(), .isEmail(), and .isLength().
+4.Check the validation results
+Use validationResult(req) to determine whether any rules failed.
+5.Continue or stop
+If the input is valid, call next() so the request proceeds to the controller. Otherwise, forward a validation error to the error-handling middleware
+*/
 export {
     userRegisterValidator,userLoginvalidator
 }
